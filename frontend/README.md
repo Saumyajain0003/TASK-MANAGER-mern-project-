@@ -1,70 +1,221 @@
-# Getting Started with Create React App
+# ✅ Task Manager App (MERN Stack)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack Task Manager web application built using the MERN Stack (MongoDB, Express.js, React.js, Node.js). It helps users add, update, delete, and track tasks efficiently with secure authentication and database integration.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Demo Account
 
-### `npm start`
+```
+Email: testme@gmail.com
+Password: SMILE@1234
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📸 Screenshots
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Login Page
+![Login Page](./screenshots/login.png)
 
-### `npm test`
+### Task Manager Dashboard
+![Dashboard](./screenshots/dashboard.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Features
 
-### `npm run build`
+- 🔐 **User Authentication with JWT** - Secure login and registration system
+- 📝 **Create, Update, and Delete Tasks** - Full CRUD operations for task management
+- 📋 **View All Tasks in Real-Time** - Dynamic task display with live updates
+- 💾 **Data Storage with MongoDB Atlas** - Cloud-based database for reliable data persistence
+- ⚡ **RESTful API with Express.js** - Well-structured backend API endpoints
+- 🖥️ **Modern, Responsive UI built with React.js** - Clean and intuitive user interface
+- 🌐 **Fully Deployed** - Frontend on Vercel & Backend on Render
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🧰 Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Layer | Technologies Used |
+|-------|-------------------|
+| **Frontend** | React.js, Axios, CSS / Tailwind |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB (Mongoose) |
+| **Authentication** | JWT (JSON Web Tokens) |
+| **Deployment** | Vercel (Frontend) • Render (Backend) |
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📁 Project Structure
+```
+task-manager/
+│
+├── backend/
+│   ├── server.js
+│   ├── .env
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── .env
+│   └── package.json
+│
+└── README.md
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## ⚙️ Installation & Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB Atlas account
+- Git
 
-## Learn More
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/Saumyajain0003/task-manager.git
+cd task-manager
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2️⃣ Backend Setup
+```bash
+cd backend
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Create a `.env` file in the `backend` folder:
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+PORT=5000
+```
 
-### Code Splitting
+**Run the backend:**
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The backend runs on `http://localhost:5000`
 
-### Analyzing the Bundle Size
+### 3️⃣ Frontend Setup
+```bash
+cd frontend
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Create a `.env` file in the `frontend` folder:
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+```
 
-### Making a Progressive Web App
+For production (after deploying backend):
+```env
+REACT_APP_API_URL=https://your-backend.onrender.com/api
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Run frontend locally:**
+```bash
+npm start
+```
 
-### Advanced Configuration
+The frontend runs on `http://localhost:3000`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Build production files:**
+```bash
+npm run build
+```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🔗 API Endpoints
 
-### `npm run build` fails to minify
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/register` | Register a new user |
+| `POST` | `/api/auth/login` | Login user and get JWT token |
+| `GET` | `/api/tasks` | Get all tasks (authenticated) |
+| `POST` | `/api/tasks` | Create a new task |
+| `PUT` | `/api/tasks/:id` | Update an existing task |
+| `DELETE` | `/api/tasks/:id` | Delete a task |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## 🌐 Deployment Guide
+
+### ✅ Backend Deployment (Render)
+
+1. Go to [Render.com](https://render.com)
+2. Click **New** → **Web Service**
+3. Connect your GitHub repository (backend folder)
+4. Configure the service:
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. Add environment variables:
+```
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+```
+6. Click **Deploy**
+
+### ✅ Frontend Deployment (Vercel)
+
+1. Go to [Vercel.com](https://vercel.com)
+2. Click **Add New Project**
+3. Import your GitHub repository (frontend folder)
+4. Add environment variable:
+```
+   REACT_APP_API_URL=https://your-backend.onrender.com/api
+```
+5. Vercel auto-detects React settings:
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `build`
+6. Click **Deploy** 🚀
+
+---
+
+## 🎯 How to Use
+
+1. **Register/Login:** Create an account or login with existing credentials
+2. **Add Tasks:** Click on "Add Task" to create a new task
+3. **Update Tasks:** Click on a task to edit its details
+4. **Delete Tasks:** Remove completed or unwanted tasks
+5. **View Tasks:** See all your tasks in an organized list
+
+---
+
+## 💡 Future Enhancements
+
+- ⏰ Add due dates and reminders
+- 🔔 Push notifications for upcoming deadlines
+- 📊 Task analytics and productivity insights
+- 🔍 Search and filter functionality
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 👩‍💻 Author
+
+**Saumya Jain**
+
+- 💻 GitHub: [github.com/Saumyajain0003](https://github.com/Saumyajain0003)
+- 🌐 Live App: [task-manager-mern-project-vmgo.vercel.app/](https://task-manager-mern-project-vmgo.vercel.app/)
+
+---
+
+## 🪪 License
+
+This project is licensed under the MIT License — free to use and modify.
+
+---
+
+<div align="center">

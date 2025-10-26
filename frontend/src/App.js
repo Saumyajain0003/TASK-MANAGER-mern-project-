@@ -35,7 +35,6 @@ function App() {
   const [showStats, setShowStats] = useState(false);
   const [stats, setStats] = useState(null);
 
-  // Available categories
   const [categories, setCategories] = useState([]);
 
   // Fetch tasks function
@@ -57,6 +56,8 @@ function App() {
       if (response.ok) {
         const data = await response.json();
         setTasks(data);
+      } else {
+        console.error('Failed to fetch tasks');
       }
     } catch (err) {
       console.error('Error fetching tasks:', err);
@@ -115,7 +116,6 @@ function App() {
     }
   }, [fetchTasks]);
 
-  // Refetch tasks when filters or authentication change
   useEffect(() => {
     if (isAuthenticated) {
       fetchTasks();
@@ -124,50 +124,56 @@ function App() {
 
   // Auth functions
   const handleAuth = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
+  try {
+    const endpoint = authMode === 'login' ? '/auth/login' : '/auth/register';
+    const body = authMode === 'login' ? { email, password } : { username, email, password };
+    const url = `${API_URL}${endpoint}`;
+    console.log(url);
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    let data = null;
     try {
-      const endpoint = authMode === 'login' ? '/auth/login' : '/auth/register';
-      const body =
-        authMode === 'login' ? { email, password } : { username, email, password };
-
-      const response = await fetch(`${API_URL}${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.message || 'Authentication failed');
-        setLoading(false);
-        return;
-      }
-
-      if (!data.token || !data.user) {
-        alert('Invalid response from server');
-        setLoading(false);
-        return;
-      }
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      setIsAuthenticated(true);
-      setUser(data.user);
-      setEmail('');
-      setPassword('');
-      setUsername('');
-
-      fetchTasks(data.token);
-      fetchCategories(data.token);
-    } catch (err) {
-      console.error('Auth error:', err);
-      alert('Network error. Check backend URL.');
+      data = await response.json();
+    } catch {
+      console.error('Non-JSON response from backend:', await response.text());
     }
-    setLoading(false);
-  };
+
+    if (!response.ok || !data) {
+      alert(data?.message || 'Authentication failed or backend URL is wrong');
+      setLoading(false);
+      return;
+    }
+
+    if (!data.token || !data.user) {
+      alert('Invalid response from server');
+      setLoading(false);
+      return;
+    }
+
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    setIsAuthenticated(true);
+    setUser(data.user);
+    setEmail('');
+    setPassword('');
+    setUsername('');
+
+    fetchTasks(data.token);
+    fetchCategories(data.token);
+  } catch (err) {
+    console.error('Auth error:', err);
+    alert('Network error. Check backend URL.');
+  }
+  setLoading(false);
+};
+
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -299,14 +305,10 @@ function App() {
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'high':
-        return '#dc3545';
-      case 'medium':
-        return '#ffc107';
-      case 'low':
-        return '#28a745';
-      default:
-        return '#6c757d';
+      case 'high': return '#dc3545';
+      case 'medium': return '#ffc107';
+      case 'low': return '#28a745';
+      default: return '#6c757d';
     }
   };
 
@@ -489,8 +491,8 @@ function App() {
                   </div>
                 </div>
                 <div className="task-actions">
-                  <button onClick={() => editTask(task)} className="edit-btn">✏️ Edit</button>
-                  <button onClick={() => deleteTask(task._id)} className="delete-btn">🗑️ Delete</button>
+                  <button onClick={() => editTask(task)} className="edit-btn">✏️</button>
+                  <button onClick={() => deleteTask(task)} className="delete-btn">🗑️</button>
                 </div>
               </div>
             ))
